@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./dist/style.css" />
+  </head>
+  <body class="bg-purple-100 m-0 p-0 box-border h-screen grid place-content-center">
+    <div class= "watch shadow-2xl bg-blue-50 w-80 py-10 flex-row rounded-3xl">
+      <div class="screen flex justify-center items-center bg-blue-50 w-60 mx-auto h-60 rounded-full shadow-2xl text-5xl gap-1">
+        <div class="seconds">00</div>
+        <div class="dots">:</div>
+        <div class="miliseconds">00</div>
+      </div>
+      <div class="buttons text-lg mt-20 mb-20 flex justify-center mx-auto gap-8">
+        <button class="start px-3 py-4 rounded-xl shadow-md border-1">Start</button>
+        <button class="stop px-3 py-4 rounded-xl shadow-md border-1">Stop</button>
+        <button class="reset px-3 py-4 rounded-xl shadow-md border-1">Reset</button>
+      </div>
+      <p class="text font-mono text-center">Try to stop at 10:00</p>
+    </div>
+    <div class="container fixed w-screen h-screen bg-purple-100 grid place-content-center hidden">
+      <div class="message flex-row rounded-3xl shadow-2xl bg-blue-50 p-10 font-light w-80">
+        <p class="message-label text-3xl w-1/1 text-center">Congratulations, you win 1000$</p>
+        <p class="w-1/1 text-center text-2xl mt-10">Your time is</p>
+        <p class="time w-1/1 text-center text-5xl"></p>
+        <button class="okay mt-14 ml-20 shadow-md border-2 py-1 px-8 rounded-lg">OK</button>
+      </div>
+    </div>
+
+    <script>
+      let sec = 00;
+      let milisec = 00;
+      let Interval;
+      const seconds = document.querySelector('.seconds');
+      const miliseconds = document.querySelector('.miliseconds');
+      const btnStart = document.querySelector('.start');
+      const btnStop = document.querySelector('.stop');
+      const btnReset = document.querySelector('.reset');
+      const timeLabel = document.querySelector('.time');
+      const container = document.querySelector('.container');
+      const messageLabel = document.querySelector('.message-label');
+      const btnOkay = document.querySelector('.okay');
+      let dots = document.querySelector('.dots');
+
+      timeLabel.textContent = `00:00`
+
+      
+      btnStart.addEventListener('click', () => {
+        clearInterval(Interval);
+        Interval = setInterval(startTime, 10);
+      })
+
+      btnStop.addEventListener('click', () => {
+        clearInterval(Interval);
+        if(seconds.textContent == '10' && miliseconds.textContent == '00'){
+        setTimeout(function(){
+          container.classList.remove('hidden');
+          timeLabel.innerHTML = `${seconds.textContent} : ${miliseconds.textContent}`;
+          messageLabel.innerHTML = `Congratulations, you win 1000$ !`;
+          messageLabel.style.color = 'green';
+        }, 500);
+      } else if(Number(seconds.textContent >= 10 && Number(miliseconds.textContent > 1))){
+        setTimeout(function(){
+          container.classList.remove('hidden');
+          timeLabel.innerHTML = `${seconds.textContent} : ${miliseconds.textContent}`;
+          messageLabel.innerHTML = `Oh no, you were so close, try again.`;
+          messageLabel.style.color = 'red';
+        }, 500);
+        }
+      })
+
+      btnOkay.addEventListener('click', () => {
+        clearInterval(Interval);
+        sec = "00";
+        milisec = "00";
+        seconds.innerHTML = sec;
+        miliseconds.innerHTML = milisec;
+        container.classList.add('hidden')
+      })
+      
+      btnReset.addEventListener('click', () => {
+        clearInterval(Interval);
+        sec = "00";
+        milisec = "00";
+        seconds.innerHTML = sec;
+        miliseconds.innerHTML = milisec;
+      })
+
+      function startTime(){
+        milisec++;
+        if(milisec <= 9){
+          miliseconds.innerHTML = "0" + milisec;
+        }
+        if(milisec > 9){
+          miliseconds.innerHTML = milisec;
+        }
+        if(milisec > 99){
+          sec++;
+          seconds.innerHTML = "0" + sec;
+          milisec = 0
+          miliseconds.innerHTML = "0" + milisec
+        }
+        if(sec > 9){
+          seconds.innerHTML = sec;
+        }
+      }
+
+    </script>
+  </body>
+  </html>
