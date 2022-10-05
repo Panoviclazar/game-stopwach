@@ -69,6 +69,13 @@
           messageLabel.innerHTML = `Oh no, you were so close, try again.`;
           messageLabel.style.color = 'red';
         }, 500);
+        } else if(Number(seconds.textContent) < 10){
+          setTimeout(function(){
+            container.classList.remove('hidden');
+          timeLabel.innerHTML = `${seconds.textContent} : ${miliseconds.textContent}`;
+          messageLabel.innerHTML = `Oh no, you clicked early, try again.`;
+          messageLabel.style.color = 'red';
+          }, 500)
         }
       })
 
