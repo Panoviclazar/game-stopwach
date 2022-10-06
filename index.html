@@ -43,6 +43,7 @@
       const container = document.querySelector('.container');
       const messageLabel = document.querySelector('.message-label');
       const btnOkay = document.querySelector('.okay');
+      const textLabel = document.querySelector('.text');
       let dots = document.querySelector('.dots');
 
       timeLabel.textContent = `00:00`
@@ -51,6 +52,7 @@
       btnStart.addEventListener('click', () => {
         clearInterval(Interval);
         Interval = setInterval(startTime, 10);
+        textLabel.classList.remove('animate-bounce');
       })
 
       btnStop.addEventListener('click', () => {
@@ -85,7 +87,8 @@
         milisec = "00";
         seconds.innerHTML = sec;
         miliseconds.innerHTML = milisec;
-        container.classList.add('hidden')
+        container.classList.add('hidden');
+        textLabel.classList.add('animate-bounce');
       })
       
       btnReset.addEventListener('click', () => {
